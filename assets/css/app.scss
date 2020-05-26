@@ -1,0 +1,20 @@
+// the ~ allows you to reference things in node_modules
+$theme-colors: (
+        "primary": #CFD8DC,
+        "secondary":#455A64,
+);
+
+$primaryColor: #CFD8DC;
+$secondaryColor: #455A64;
+@import "~bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/_variables.scss";
+
+body {
+  background-color: $secondaryColor;
+}
+
+h1, p {
+  color: $primaryColor;
+  background-color: $secondaryColor;
+  font-size: 2.5rem;
+}
