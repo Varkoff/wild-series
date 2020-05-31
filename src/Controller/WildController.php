@@ -36,4 +36,5 @@ class WildController extends AbstractController
             'slug' => $slug,
         ]);
     }
+
 }
