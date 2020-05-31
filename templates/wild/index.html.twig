@@ -1,5 +1,10 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}Wild/{% endblock %}
+{% block body %}
 
+    <div class="container">
+        <h1>Bienvenue sur tada !</h1>
+        <a href="/wild/show/test-test">test-test</a>
+    </div>
+{% endblock %}
 
-{% block title %} Index {% endblock %}
-{% block body %} <h1> {{ website }} index</h1> {% endblock %}

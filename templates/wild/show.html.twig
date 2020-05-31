@@ -1,5 +1,9 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}Wild/{{ slug }}{% endblock %}
+{% block body %}
 
+    <div class="container">
+        <h1>{{ slug }} !</h1>
+    </div>
+{% endblock %}
 
-{% block title %}Show{% endblock %}
-{% block body %}<h1>{{ seriename }} </h1>{% endblock %}
