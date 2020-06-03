@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProgramRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,10 +35,25 @@ class Program
     private $poster;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program")
+     */
+    private $seasons;
+
+    public function __construct()
+    {
+        $this->seasons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +104,49 @@ class Program
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getCategories(): ?Category
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?Category $categories): self
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Season[]
+     */
+    public function getSeasons(): Collection
+    {
+        return $this->seasons;
+    }
+
+    public function addSeasons(Season $seasons): self
+    {
+        if (!$this->seasons->contains($seasons)) {
+            $this->seasons[] = $seasons;
+            $seasons->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeasons(Season $seasons): self
+    {
+        if ($this->seasons->contains($seasons)) {
+            $this->seasons->removeElement($seasons);
+            // set the owning side to null (unless already changed)
+            if ($seasons->getProgram() === $this) {
+                $seasons->setProgram(null);
+            }
+        }
 
         return $this;
     }
