@@ -15,6 +15,9 @@ body {
 
 h1, p {
   color: $primaryColor;
-  background-color: $secondaryColor;
   font-size: 2.5rem;
+}
+p{
+  color: $primaryColor;
+  font-size: 1rem;
 }
