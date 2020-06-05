@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <a href="{{ path('category_add') }}"><h2>Ajouter une catégorie</h2></a>
+            </div>
+            <div class="col-6">
+            <h3>Liste des annonces</h3>
+                {% for category in categories %}
+                <li>{{ category.name }}</li>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
