@@ -6,7 +6,7 @@
         <h2>Season {{ season.number }} ({{ season.year }})</h2>
         {% for episode in episodes %}
             <div class="col">
-                <h3>{{ episode.number }}. {{ episode.title }}</h3>
+                <a href="/wild/episode/{{ episode.id }}"><h3>{{ episode.number }}. {{ episode.title }}</h3></a>
                 <p>{{ episode.synopsis }}</p>
             </div>
         {% endfor %}

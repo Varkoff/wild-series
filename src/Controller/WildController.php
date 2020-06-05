@@ -7,6 +7,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use phpDocumentor\Reflection\Type;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,14 +109,14 @@ class WildController extends AbstractController
     /**
      * @Route("/season/{seasonId<^[1-9]+>}",  name="showBySeason")
      */
-    public function showBySeason(int $seasonId=null): Response
+    public function showBySeason(int $seasonId = null): Response
     {
         if (!$seasonId)
         {
             throw $this->createNotFoundException('Aucune saison sélectionnée.');
         }
 
-        $season = $this->getDoctrine()->getRepository(Season::class)->findOneBy(['id'=>$seasonId]);
+        $season = $this->getDoctrine()->getRepository(Season::class)->findOneBy(['id' => $seasonId]);
 
 
         $program = $season->getProgram();
@@ -133,8 +134,24 @@ class WildController extends AbstractController
             'wild/season.html.twig', [
             'season' => $season,
             'seasonId' => $seasonId,
-                'program'=>$program,
-                'episodes'=>$episodes
+            'program' => $program,
+            'episodes' => $episodes
+        ]);
+    }
+
+
+    /**
+     * @Route("/episode/{id<^[1-9]+>}",  name="showByEpisode")
+     */
+    public function showEpisode(Episode $episode): Response
+    {
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
+        return $this->render(
+            'wild/episode.html.twig', [
+            'episode' => $episode,
+            'program' => $program,
+            'season' => $season
         ]);
     }
 }
