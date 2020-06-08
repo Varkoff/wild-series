@@ -3,37 +3,31 @@
 {% block title %}Program index{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
     <h1>Program index</h1>
+        <a href="{{ path('program_new') }}">Create new</a>
+        <div class="row">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Summary</th>
-                <th>Poster</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
         {% for program in programs %}
-            <tr>
-                <td>{{ program.id }}</td>
-                <td>{{ program.title }}</td>
-                <td>{{ program.summary }}</td>
-                <td>{{ program.poster }}</td>
-                <td>
+            <a href="{{ path('program_show', {'id': program.id}) }}"><div class="col-2" style="overflow:hidden;">
+                <h3>{{ program.id }} / {{ program.title }} </h3>
+                {% if program.poster is not null %}
+                <img src="{{ program.poster }}" style="width:100%"/>
+                {% else %}
+                    <img src="https://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg" style="width:100%"/>
+                    {% endif %}
+                <p>{{ program.summary }}</p>
                     <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
                     <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
-                </td>
-            </tr>
+                    <a href="{{ path('program_delete', {'id': program.id}) }}">delete</a>
+                </div></a>
         {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
+            <div class="col-4">
+                <h2>no records found</h2>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+        </div>
 
     <a href="{{ path('program_new') }}">Create new</a>
+    </div>
 {% endblock %}
