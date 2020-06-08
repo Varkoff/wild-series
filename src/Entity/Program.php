@@ -33,7 +33,7 @@ class Program
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
-     *@Assert\Regex(pattern="/plus belle la vie/", match=false, message="On parle de vraies séries ici.")
+     * @Assert\Regex(pattern="/plus belle la vie/", match=false, message="On parle de vraies séries ici.")
      */
     private $summary;
 
@@ -142,9 +142,16 @@ class Program
         return $this->seasons;
     }
 
+
+    public function getSelector(): ?string
+    {
+     return $this->getTitle();
+    }
+
     public function addSeasons(Season $seasons): self
     {
-        if (!$this->seasons->contains($seasons)) {
+        if (!$this->seasons->contains($seasons))
+        {
             $this->seasons[] = $seasons;
             $seasons->setProgram($this);
         }
@@ -154,10 +161,12 @@ class Program
 
     public function removeSeasons(Season $seasons): self
     {
-        if ($this->seasons->contains($seasons)) {
+        if ($this->seasons->contains($seasons))
+        {
             $this->seasons->removeElement($seasons);
             // set the owning side to null (unless already changed)
-            if ($seasons->getProgram() === $this) {
+            if ($seasons->getProgram() === $this)
+            {
                 $seasons->setProgram(null);
             }
         }
@@ -175,7 +184,8 @@ class Program
 
     public function addActor(Actor $actor): self
     {
-        if (!$this->actors->contains($actor)) {
+        if (!$this->actors->contains($actor))
+        {
             $this->actors[] = $actor;
             $actor->addProgram($this);
         }
@@ -185,7 +195,8 @@ class Program
 
     public function removeActor(Actor $actor): self
     {
-        if ($this->actors->contains($actor)) {
+        if ($this->actors->contains($actor))
+        {
             $this->actors->removeElement($actor);
             $actor->removeProgram($this);
         }

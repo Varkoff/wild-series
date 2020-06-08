@@ -70,6 +70,10 @@ class Season
         return $this;
     }
 
+    public function getSelector():?string{
+        return $this->getProgram()->getTitle().' Saison '.$this->getNumber();
+    }
+
     public function getNumber(): ?int
     {
         return $this->number;
