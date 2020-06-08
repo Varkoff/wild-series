@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actor index{% endblock %}
+
+{% block body %}
+    <div container="container-fluid">
+    <h1>Actor index</h1>
+        <a href="{{ path('actor_new') }}">Create new</a>
+        <div class="row">
+            {% for actor in actors %}
+                <div class="col-2">
+                <h2>{{ actor.id }} | {{ actor.name }} {{ actor.lastname }} </h2>
+
+
+                    <img src="{{ actor.image }}" style="width:100%;"/>
+                    <p>Séries</p>
+                    {% for appearance in actor.programs %}
+                    <li>{{ appearance.title }}</li>
+                    {% endfor %}</p>
+                        <a href="{{ path('actor_show', {'id': actor.id}) }}">show</a>
+                        <a href="{{ path('actor_edit', {'id': actor.id}) }}">edit</a>
+
+
+                </div>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+        </div>
+
+
+    <a href="{{ path('actor_new') }}">Create new</a>
+    </div>
+{% endblock %}
