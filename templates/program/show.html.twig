@@ -7,6 +7,12 @@
         <h1>{{ program.title }}</h1>
         <p>{{ program.summary }}</p>
         <img src="{{ program.poster }}"/>
+        <h3>Saisons</h3>
+        {% for season in program.seasons %}
+        <div class="col-3">
+            <a href="{{ path('season_show', {id: season.id}) }}"><li>{{ season.number }} - {{ season.year }}</li></a>
+        </div>
+        {% endfor %}
         <h3>Acteurs :</h3>
         <div class="row">
         {% for acteurs in program.actors %}

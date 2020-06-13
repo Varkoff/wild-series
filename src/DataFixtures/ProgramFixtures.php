@@ -60,7 +60,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         }
         for ($j= 0 + count(self::PROGRAMS); $j< 100+count(self::PROGRAMS); $j++){
             $program = new Program();
-            $program->setTitle($faker->title);
+            $program->setTitle($faker->sentence(rand(1, 4), true));
             $program->setSummary($faker->sentence(10, true));
             $manager->persist($program);
             $this->addReference('programme_' . $j, $program);

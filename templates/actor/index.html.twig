@@ -3,14 +3,15 @@
 {% block title %}Actor index{% endblock %}
 
 {% block body %}
-    <div container="container-fluid">
+    <div class="container">
     <h1>{{ actors|length}} actors</h1>
         <a href="{{ path('actor_new') }}">Create new</a>
         <div class="row">
-            {% for actor in actors[1:10] %}
+            {% for actor in actors %}
                 <div class="col-2">
                 <h2>{{ loop.index }} | {{ actor.id }} | {{ actor.name }} {{ actor.lastname }} </h2>
-                    <img src="{{ actor.image }}" style="width:100%;"/>
+                    <img style="width:100%;" src="https://lh3.googleusercontent.com/proxy/SccAwXnYOQLlwVa3saPckRp4ZYbnTLACt9bIL0Dm0uv7uc9U4xfiD9xvmQRdtzqlZODDsIsu8bMqUeFRoqiJfLKnMZ4uz02P66fCqtF8gl-PILQozQ9H3UayzCiY71j6n75EKdxJpvHjyZrKByit2jjurgAjehxFwdl9PiFOoAzfokAT" alt="bg"/>
+{#                    <img src="{{ actor.image }}" style="width:100%;"/>#}
                     <p>Séries</p>
                     {% for appearance in actor.programs %}
                     <li>{{ appearance.title }}</li>
