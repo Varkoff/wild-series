@@ -4,14 +4,12 @@
 
 {% block body %}
     <div container="container-fluid">
-    <h1>Actor index</h1>
+    <h1>{{ actors|length}} actors</h1>
         <a href="{{ path('actor_new') }}">Create new</a>
         <div class="row">
-            {% for actor in actors %}
+            {% for actor in actors[1:10] %}
                 <div class="col-2">
-                <h2>{{ actor.id }} | {{ actor.name }} {{ actor.lastname }} </h2>
-
-
+                <h2>{{ loop.index }} | {{ actor.id }} | {{ actor.name }} {{ actor.lastname }} </h2>
                     <img src="{{ actor.image }}" style="width:100%;"/>
                     <p>Séries</p>
                     {% for appearance in actor.programs %}

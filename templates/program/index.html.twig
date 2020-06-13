@@ -3,31 +3,41 @@
 {% block title %}Program index{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-    <h1>Program index</h1>
+    <div class="container">
+        <h1>{{ programs|length }} programmes</h1>
         <a href="{{ path('program_new') }}">Create new</a>
         <div class="row">
+            {% for program in programs %}
+            <div class="col-3">
+                <a href="{{ path('program_show', {'id': program.id}) }}">
 
-        {% for program in programs %}
-            <a href="{{ path('program_show', {'id': program.id}) }}"><div class="col-2" style="overflow:hidden;">
-                <h3>{{ program.id }} / {{ program.title }} </h3>
-                {% if program.poster is not null %}
-                <img src="{{ program.poster }}" style="width:100%"/>
-                {% else %}
-                    <img src="https://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg" style="width:100%"/>
-                    {% endif %}
-                <p>{{ program.summary }}</p>
-                    <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
-                    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
-                    <a href="{{ path('program_delete', {'id': program.id}) }}">delete</a>
-                </div></a>
-        {% else %}
-            <div class="col-4">
-                <h2>no records found</h2>
+                        <h3>{{ program.id }} / {{ program.title }} - {{ program.category.name }} </h3>
+                        {% if program.poster is not null %}
+                            <img src="{{ program.poster }}" style="width:100%"/>
+                        {% else %}
+                            <img src="https://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg"
+                                 style="width:100%"/>
+                        {% endif %}
+                        <p>{{ program.summary }}</p>
+                        <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
+                        <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+                        <a href="{{ path('program_delete', {'id': program.id}) }}">delete</a>
+                </a>
             </div>
-        {% endfor %}
-        </div>
+                {% else %}
+                    <div class="col-3">
+                        <h2>no records found</h2>
+                    </div>
 
-    <a href="{{ path('program_new') }}">Create new</a>
+                {% endfor %}
+
+
+            <a href="{{ path('program_new') }}">Create new</a>
+        </div>
     </div>
+
+
+
+
+
 {% endblock %}
