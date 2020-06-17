@@ -40,21 +40,23 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
             $actor = new Actor();
             $actor->setName($data['name']);
             $actor->setLastname($data['lastname']);
+            $actor->setImage("https://picsum.photos/seed/".rand(0,3000000)."/200/300");
             $manager->persist($actor);
             $this->addReference('actor_' . $i, $actor);
             $i++;
             $actor->addProgram($this->getReference('programme_0'));
         }
 
-        for ($j = 0 + count(self::ACTORS); $j < 1000 + count(self::ACTORS); $j++)
+        for ($j = 0 + count(self::ACTORS); $j < 100 + count(self::ACTORS); $j++)
         {
             $actor = new Actor();
             $actor->setName($faker->name);
             $actor->setLastname($faker->lastName);
+            $actor->setImage("https://picsum.photos/seed/".rand(0,3000000)."/200/300");
             $manager->persist($actor);
             $this->addReference('actor_' . $j, $actor);
             $i++;
-            $actor->addProgram($this->getReference('programme_' . rand(0, 99)));
+            $actor->addProgram($this->getReference('programme_' . rand(0, 10)));
         }
         $manager->flush();
     }

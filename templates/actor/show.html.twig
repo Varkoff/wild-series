@@ -6,16 +6,15 @@
     <div class="container">
         <div class="col">
             <h1>{{ actor.name }} {{ actor.lastname }}</h1>
-            <img src="{{ actor.image }}"/>
             <p>Séries :</p>
-            {% for appearance in actor.programs %}
-                <a href="{{ path('program_show', {id:appearance.id}) }}">
-                    <li>{{ appearance.title }}</li>
+            {% for program in actor.programs %}
+                <a href="{{ path('program_show', {program:program.slug}) }}">
+                    <li>{{ program.title }}</li>
                 </a>
             {% endfor %}
             <a href="{{ path('actor_index') }}">back to list</a>
-            <a href="{{ path('actor_edit', {'id': actor.id}) }}">edit</a>
-            <a href="{{ path('actor_delete', {'id': actor.id}) }}">delete</a>
+            <a href="{{ path('actor_edit', {actor: actor.slug}) }}">edit</a>
+            <a href="{{ path('actor_delete', {actor: actor.slug}) }}">delete</a>
         </div>
     </div>
     {{ include('actor/_delete_form.html.twig') }}

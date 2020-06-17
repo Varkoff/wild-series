@@ -19,7 +19,7 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        for ($j = 0; $j < 500; $j++)
+        for ($j = 0; $j < 50; $j++)
         {
             $season = new Season();
             $season->setYear(rand(2000, 2020));
@@ -28,7 +28,7 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($season);
             $this->addReference('saison_' . $j, $season);
 
-            $season->setProgram($this->getReference('programme_' . rand(0, 100)));
+            $season->setProgram($this->getReference('programme_' . rand(0, 10)));
         }
         $manager->flush();
     }

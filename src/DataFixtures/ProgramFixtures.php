@@ -53,15 +53,17 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program = new Program();
             $program->setTitle($title);
             $program->setSummary($data['summary']);
+            $program->setPoster("https://picsum.photos/seed/".rand(0,3000000)."/200/300");
             $manager->persist($program);
             $this->addReference('programme_' . $i, $program);
             $i++;
             $program->setCategory($this->getReference('categorie_4'));
         }
-        for ($j= 0 + count(self::PROGRAMS); $j< 100+count(self::PROGRAMS); $j++){
+        for ($j= 0 + count(self::PROGRAMS); $j< 10+count(self::PROGRAMS); $j++){
             $program = new Program();
             $program->setTitle($faker->sentence(rand(1, 4), true));
             $program->setSummary($faker->sentence(10, true));
+            $program->setPoster("https://picsum.photos/seed/".rand(0,3000000)."/200/300");
             $manager->persist($program);
             $this->addReference('programme_' . $j, $program);
             $i++;

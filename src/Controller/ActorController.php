@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Actor;
 use App\Form\ActorType;
 use App\Repository\ActorRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,8 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="actor_show", methods={"GET"})
+     * @Route("/{actor}", name="actor_show", methods={"GET"})
+     * @ParamConverter("actor", options={"mapping": {"actor": "slug"}})
      */
     public function show(Actor $actor): Response
     {
@@ -59,7 +61,8 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="actor_edit", methods={"GET","POST"})
+     * @Route("/{actor}/edit", name="actor_edit", methods={"GET","POST"})
+     * @ParamConverter("actor", options={"mapping": {"actor": "slug"}})
      */
     public function edit(Request $request, Actor $actor): Response
     {
@@ -79,7 +82,8 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="actor_delete", methods={"DELETE"})
+     * @Route("/{actor}", name="actor_delete", methods={"DELETE"})
+     * @ParamConverter("actor", options={"mapping": {"actor": "slug"}})
      */
     public function delete(Request $request, Actor $actor): Response
     {

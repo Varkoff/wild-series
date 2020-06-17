@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use phpDocumentor\Reflection\Type;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Slugify;
 
 /**
  * @Route("/program")
@@ -48,8 +51,10 @@ class ProgramController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="program_show", methods={"GET"})
+     * @Route("/{program}", name="program_show", methods={"GET"})
+     * @ParamConverter("program", options={"mapping": {"program": "slug"}})
      */
     public function show(Program $program): Response
     {
@@ -59,7 +64,8 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="program_edit", methods={"GET","POST"})
+     * @Route("/{program}/edit", name="program_edit", methods={"GET","POST"})
+     * @ParamConverter("program", options={"mapping": {"program": "slug"}})
      */
     public function edit(Request $request, Program $program): Response
     {
@@ -79,7 +85,8 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="program_delete", methods={"DELETE"})
+     * @Route("/{program}", name="program_delete", methods={"DELETE"})
+     * @ParamConverter("program", options={"mapping": {"program": "slug"}})
      */
     public function delete(Request $request, Program $program): Response
     {

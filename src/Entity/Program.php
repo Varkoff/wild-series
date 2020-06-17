@@ -6,6 +6,7 @@ use App\Repository\ProgramRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -43,25 +44,29 @@ class Program
     private $poster;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
+     * @ORM\ManyToOne(targetEntity=Category::class,  inversedBy="programs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
-     */
-    private $categories;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program")
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program", cascade={"persist", "remove"})
      */
     private $seasons;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Actor::class, mappedBy="programs")
+     * @ORM\ManyToMany(targetEntity=Actor::class, mappedBy="programs", orphanRemoval=true)
      */
     private $actors;
+
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"}))
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -118,18 +123,6 @@ class Program
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getCategories(): ?Category
-    {
-        return $this->categories;
-    }
-
-    public function setCategories(?Category $categories): self
-    {
-        $this->categories = $categories;
 
         return $this;
     }
@@ -200,6 +193,18 @@ class Program
             $this->actors->removeElement($actor);
             $actor->removeProgram($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -9,17 +9,13 @@
         <div class="row">
             {% for actor in actors %}
                 <div class="col-2">
-                <h2>{{ loop.index }} | {{ actor.id }} | {{ actor.name }} {{ actor.lastname }} </h2>
-                    <img style="width:100%;" src="https://lh3.googleusercontent.com/proxy/SccAwXnYOQLlwVa3saPckRp4ZYbnTLACt9bIL0Dm0uv7uc9U4xfiD9xvmQRdtzqlZODDsIsu8bMqUeFRoqiJfLKnMZ4uz02P66fCqtF8gl-PILQozQ9H3UayzCiY71j6n75EKdxJpvHjyZrKByit2jjurgAjehxFwdl9PiFOoAzfokAT" alt="bg"/>
-{#                    <img src="{{ actor.image }}" style="width:100%;"/>#}
+
+                    <a href="{{ path('actor_show', {actor:actor.slug}) }}"><img style="width:100%;" src="{{ actor.image }}"/> </a>
+                    <p>{{ actor.name }} {{ actor.lastname }} </p>
                     <p>Séries</p>
                     {% for appearance in actor.programs %}
                     <li>{{ appearance.title }}</li>
                     {% endfor %}</p>
-                        <a href="{{ path('actor_show', {'id': actor.id}) }}">show</a>
-                        <a href="{{ path('actor_edit', {'id': actor.id}) }}">edit</a>
-
-
                 </div>
             {% else %}
                 <tr>

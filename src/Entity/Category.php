@@ -37,9 +37,6 @@ class Category
         $this->programs = new ArrayCollection();
     }
 
-//    public function _toString(){
-//        return (string)$this->name;
-//    }
 
     public function getId(): ?int
     {

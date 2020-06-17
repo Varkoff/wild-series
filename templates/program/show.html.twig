@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>{{ program.title }}</h1>
+        <h1>{{ program.title }} {{ program.id }}</h1>
         <p>{{ program.summary }}</p>
         <img src="{{ program.poster }}"/>
         <h3>Saisons</h3>
@@ -18,15 +18,15 @@
         {% for acteurs in program.actors %}
 
                 <div class="col-3">
-                    <a href="{{ path('actor_show', {id:acteurs.id}) }}"><p>{{ acteurs.name }} {{ acteurs.lastname }}</p></a>
+                    <a href="{{ path('actor_show', {actor:acteurs.slug}) }}"><p>{{ acteurs.name }} {{ acteurs.lastname }}</p></a>
                     <img src="{{ acteurs.image }}"/>
                 </div>
         {% endfor %}
         </div>
         <a href="{{ path('program_index') }}">back to list</a>
 
-        <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+        <a href="{{ path('program_edit', {program: program.slug}) }}">edit</a>
     </div>
-
+f
     {{ include('program/_delete_form.html.twig') }}
 {% endblock %}

@@ -9,19 +9,19 @@
         <div class="row">
             {% for program in programs %}
             <div class="col-3">
-                <a href="{{ path('program_show', {'id': program.id}) }}">
-
+                <a href="{{ path('program_show', {program: program.slug}) }}">
+                    {% if program.poster is not null %}
+                        <img src="{{ program.poster }}" style="width:100%"/>
+                    {% else %}
+                        <img src="https://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg"
+                             style="width:100%"/>
+                    {% endif %}
                         <h3>{{ program.id }} / {{ program.title }} - {{ program.category.name }} </h3>
-                        {% if program.poster is not null %}
-                            <img src="{{ program.poster }}" style="width:100%"/>
-                        {% else %}
-                            <img src="https://underscoremusic.co.uk/site/wp-content/uploads/2014/05/no-poster.jpg"
-                                 style="width:100%"/>
-                        {% endif %}
+
                         <p>{{ program.summary }}</p>
-                        <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
-                        <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
-                        <a href="{{ path('program_delete', {'id': program.id}) }}">delete</a>
+                        <a href="{{ path('program_show', {program: program.slug}) }}">show</a>
+                        <a href="{{ path('program_edit', {program: program.slug}) }}">edit</a>
+                        <a href="{{ path('program_delete', {program: program.slug}) }}">delete</a>
                 </a>
             </div>
                 {% else %}

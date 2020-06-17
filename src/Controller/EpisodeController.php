@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Episode;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,8 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_show", methods={"GET"})
+     * @Route("/{episode}", name="episode_show", methods={"GET"})
+     * @ParamConverter("episode", options={"mapping": {"episode": "slug"}})
      */
     public function show(Episode $episode): Response
     {
@@ -59,7 +61,8 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="episode_edit", methods={"GET","POST"})
+     * @Route("/{episode}/edit", name="episode_edit", methods={"GET","POST"})
+     * @ParamConverter("episode", options={"mapping": {"episode": "slug"}})
      */
     public function edit(Request $request, Episode $episode): Response
     {
@@ -79,7 +82,8 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_delete", methods={"DELETE"})
+     * @Route("/{episode}", name="episode_delete", methods={"DELETE"})
+     * @ParamConverter("episode", options={"mapping": {"episode": "slug"}})
      */
     public function delete(Request $request, Episode $episode): Response
     {

@@ -20,7 +20,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create();
 
-        for ($j = 0; $j < 2500; $j++)
+        for ($j = 0; $j < 500; $j++)
         {
             $episode = new Episode();
             $episode->setNumber(rand(1, 5));
@@ -29,7 +29,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($episode);
             //$this->addReference('epsiode_' . $j, $episode);
 
-            $episode->setSeason($this->getReference('saison_' . rand(0, 499)));
+            $episode->setSeason($this->getReference('saison_' . rand(0, 49)));
         }
         $manager->flush();
     }
