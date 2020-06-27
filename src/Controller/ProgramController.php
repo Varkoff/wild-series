@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Slugify;
 
@@ -23,7 +25,8 @@ class ProgramController extends AbstractController
      */
     public function index(ProgramRepository $programRepository): Response
     {
-        return $this->render('program/index.html.twig', [
+        return $this->render(
+            'program/index.html.twig', [
             'programs' => $programRepository->findAll(),
         ]);
     }
@@ -31,21 +34,37 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($program);
             $entityManager->flush();
+            $content = $this->renderView(
+                'program/email/notify.html.twig',
+                array('program'=>$program)
+            );
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($content);
+
+
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
 
-        return $this->render('program/new.html.twig', [
+        return $this->render(
+            'program/new.html.twig', [
             'program' => $program,
             'form' => $form->createView(),
         ]);
@@ -58,7 +77,8 @@ class ProgramController extends AbstractController
      */
     public function show(Program $program): Response
     {
-        return $this->render('program/show.html.twig', [
+        return $this->render(
+            'program/show.html.twig', [
             'program' => $program,
         ]);
     }
@@ -72,13 +92,15 @@ class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('program_index');
         }
 
-        return $this->render('program/edit.html.twig', [
+        return $this->render(
+            'program/edit.html.twig', [
             'program' => $program,
             'form' => $form->createView(),
         ]);
@@ -90,12 +112,25 @@ class ProgramController extends AbstractController
      */
     public function delete(Request $request, Program $program): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $program->getId(), $request->request->get('_token')))
+        {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('program_index');
+    }
+
+    /**
+     * @Route("/email/notify/{program}", name="email_notify", methods={"GET"})
+     *
+     */
+    public function notify(Program $program)
+    {
+        return $this->render(
+            'program/email/notify.html.twig', [
+            'program' => $program
+        ]);
     }
 }

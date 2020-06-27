@@ -12,7 +12,9 @@
 </head>
 <body>
 <header>
+    {% block navbar %}
     {% include 'navbar.html.twig' %}
+    {% endblock %}
 </header>
 {% block body %}{% endblock %}
 {% block javascripts %}

@@ -25,8 +25,9 @@ class ProgramType extends AbstractType
                 'class' => Actor::class,
                 'choice_label' => 'selector',
                 'multiple'=>true,
-                'expanded'=>true,
+                'expanded'=>false,
                 'by_reference'=>false,
+                'required'=>false
             ])
         ;
     }

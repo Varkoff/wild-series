@@ -19,6 +19,7 @@
                         <h3>{{ program.id }} / {{ program.title }} - {{ program.category.name }} </h3>
 
                         <p>{{ program.summary }}</p>
+                        <a href="{{ path('email_notify', {program:program.id}) }}">email preview</a>
                         <a href="{{ path('program_show', {program: program.slug}) }}">show</a>
                         <a href="{{ path('program_edit', {program: program.slug}) }}">edit</a>
                         <a href="{{ path('program_delete', {program: program.slug}) }}">delete</a>
